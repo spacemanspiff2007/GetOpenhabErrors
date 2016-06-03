@@ -1,0 +1,15 @@
+{
+	"OPENHAB" : {
+		"IP"		: "localhost",
+		"PORT"		: "8080",
+		"USERNAME"	: "",
+		"PASSWORD"	: ""
+	},
+	
+    "name1" : {
+        "PATH"		: "../../logs/openhab.log",
+        "VAR" 		: "Variable_in_Openhab",
+		"INCLUDE"	: "\\[Error.+\\]",
+		"EXCLUDE"	: ""
+    }
+}
