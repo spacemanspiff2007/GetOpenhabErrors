@@ -7,9 +7,9 @@
 	},
 	
     "name1" : {
-        "PATH"		: "../../logs/openhab.log",
-        "VAR" 		: "Variable_in_Openhab",
-		"INCLUDE"	: "\\[Error.+\\]",
+        "PATH"		: "/opt/openhab/logs/openhab.log",
+        "VAR" 		: "LastError",
+		"INCLUDE"	: "\\[error.+\\]",
 		"EXCLUDE"	: ""
     }
 }

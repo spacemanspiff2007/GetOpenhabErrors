@@ -10,11 +10,17 @@ import json
 import sys
 import re
 
+
 test_config = 0
 
 #print('Number of arguments:', len(sys.argv), 'arguments.')
 #print('Argument List:', str(sys.argv))
 #print()
+
+path   = str(sys.argv[0])
+folder = path.partition('GetErrors.py')[0]
+#print("folder:")
+#print(folder)
 
 if len(sys.argv) > 1:
     if sys.argv[1] == "-T":
@@ -49,8 +55,8 @@ def write_dict( my_dict, filepath):
         return 1
         
 
-files  = read_dict( "files")
-config = read_dict( "config")
+files  = read_dict( folder + "files")
+config = read_dict( folder + "config")
 
 
 if files == {} or config == {}:
@@ -138,4 +144,4 @@ for k in config:
         logfile.close()
 
 
-write_dict(files, "files")
+write_dict(files, folder + "files")
