@@ -94,7 +94,7 @@ for k in config:
         files[k] = {}
         files[k]["POS"] = 0
 
-    with open( element["PATH"],'r') as logfile:
+    with open( element["PATH"],'r', encoding='utf8') as logfile:
         logfile.seek(0,2) # move the cursor to the end of the file
         size = logfile.tell()
         pos  = files[k]["POS"]
