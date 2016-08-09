@@ -60,7 +60,8 @@ config = read_dict( folder + "config")
 
 
 if files == {} or config == {}:
-    exit()
+    pass
+    #exit()
 
 if not config["OPENHAB"] or not config["OPENHAB"]["IP"] or not config["OPENHAB"]["PORT"]:
     exit()
