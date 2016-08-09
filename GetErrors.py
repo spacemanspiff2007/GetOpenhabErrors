@@ -60,13 +60,18 @@ config = read_dict( folder + "config")
 
 
 if files == {} or config == {}:
-    #exit()
-    pass
+    exit()
 
 if not config["OPENHAB"] or not config["OPENHAB"]["IP"] or not config["OPENHAB"]["PORT"]:
     exit()
 
-rest = oh_rest.oh_rest( config["OPENHAB"]["IP"], config["OPENHAB"]["PORT"])
+#empty user + password
+if not config["OPENHAB"]["USERNAME"]:
+    config["OPENHAB"]["USERNAME"] = ""
+if not config["OPENHAB"]["PASSWORD"]:
+    config["OPENHAB"]["PASSWORD"] = ""
+
+rest = oh_rest.oh_rest( config["OPENHAB"]["IP"], config["OPENHAB"]["PORT"], config["OPENHAB"]["USERNAME"], config["OPENHAB"]["PASSWORD"])
 
 pattern_getlines = re.compile( "^(.+?)$", re.MULTILINE)
 
