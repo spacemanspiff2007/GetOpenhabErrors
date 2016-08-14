@@ -39,8 +39,9 @@ class oh_rest:
     def basic_header(self):
         
         """ Header for OpenHAB REST request - standard """
-        self.auth = str(base64.b64encode( ('{:s}:{:s}'.format(self.username, self.password)).encode() ))
-        self.auth.replace("\n", "")
+        bytestr = '{:s}:{:s}'.format(self.username, self.password).encode( "utf-8")
+        self.auth = str( base64.b64encode( bytestr), "latin-1")
+        #self.auth.replace("\n", "")
         return {
                 "Authorization" : "Basic {:s}".format( self.auth), 
                 "Content-type": "text/plain"}
