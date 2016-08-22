@@ -59,12 +59,8 @@ files  = read_dict( folder + "files")
 config = read_dict( folder + "config")
 
 
-if files == {} or config == {}:
-    pass
-    #exit()
-
 if not config["OPENHAB"] or not config["OPENHAB"]["IP"] or not config["OPENHAB"]["PORT"]:
-    exit()
+    sys.exit("No valid \"OPENHAB\" entry in config file.")
 
 #empty user + password
 if not config["OPENHAB"]["USERNAME"]:
@@ -150,4 +146,5 @@ for k in config:
         logfile.close()
 
 
-write_dict(files, folder + "files")
+if write_dict(files, folder + "files") != 0:
+    sys.exit("Error! Could not persist file pointers!")
