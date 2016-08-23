@@ -27,7 +27,7 @@ if len(sys.argv) > 1:
         print("Testing config")
         test_config = 1
 
-errors = 0
+
 
 def read_dict( filepath):
     try:
@@ -54,13 +54,13 @@ def write_dict( my_dict, filepath):
         print("Error: '{}'".format(e))
         return 1
         
-
+errors = 0
 files  = read_dict( folder + "files")
 config = read_dict( folder + "config")
 
 
 if not config["OPENHAB"] or not config["OPENHAB"]["IP"] or not config["OPENHAB"]["PORT"]:
-    sys.exit("No valid \"OPENHAB\" entry in config file.")
+    sys.exit("No valid 'OPENHAB' entry in config file.")
 
 #empty user + password
 if not config["OPENHAB"]["USERNAME"]:
@@ -120,9 +120,11 @@ for k in config:
             my_log = logfile.read()
             files[k]["POS"] = logfile.tell()
         
-        log_lines = re.findall(pattern_getlines, my_log)
+        log_lines     = re.findall(pattern_getlines, my_log)
+        log_lines_len = len(log_lines)
         
         patter_include = re.compile( element["INCLUDE"], re.IGNORECASE)
+        patter_exclude = re.compile( element["EXCLUDE"], re.IGNORECASE)
 
         added   = 0
         sendstr = ""
@@ -130,7 +132,6 @@ for k in config:
             if re.search(patter_include, line):
                 #check exclude                
                 if element["EXCLUDE"] != "":
-                    patter_exclude = re.compile( element["EXCLUDE"], re.IGNORECASE)
                     if re.search(patter_exclude, line):
                         continue
                 
@@ -138,9 +139,14 @@ for k in config:
                 sendstr += (line + '\n', line) [ sendstr == ""]
                 added += 1
 
-        print( "{:d} of {:d} lines matched in {:s}".format( added, len(log_lines), element["PATH"]))
+        print( "{:4d} of {:5d} lines matched for '{:s}' in '{:s}'".format( added, log_lines_len, k, element["PATH"]))
         #send string to openhab
-        rest.put_status( element["VAR"], sendstr)
+        try:        
+            rest.put_status( element["VAR"], sendstr)
+        except Exception as e:
+            print("Could not post update to variable '{}'!".format(element["VAR"]))
+            print("Error: '{}'".format(e))
+            errors = errors + 1
         
         #fertig
         logfile.close()
@@ -148,3 +154,6 @@ for k in config:
 
 if write_dict(files, folder + "files") != 0:
     sys.exit("Error! Could not persist file pointers!")
+    
+if errors != 0:
+    sys.exit("There were Errors during program execution")
