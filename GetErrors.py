@@ -136,6 +136,7 @@ for k in config:
                         continue
                 
                 #add line
+                sendstr += '\n\n' + line if sendstr != "" else line
                 added += 1
 
         print( "{:4d} of {:5d} lines matched for '{:s}' in '{:s}'".format( added, log_lines_len, k, element["PATH"]))
