@@ -10,6 +10,6 @@
         "PATH"		: "/opt/openhab/logs/openhab.log",
         "VAR" 		: "LastError",
 		"INCLUDE"	: "\\[error.+\\]",
-		"EXCLUDE"	: ""
+		"EXCLUDE"	: "  <status>1</status>"
     }
 }

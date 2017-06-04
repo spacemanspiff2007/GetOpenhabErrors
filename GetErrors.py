@@ -70,7 +70,7 @@ if not config["OPENHAB"]["PASSWORD"]:
 
 rest = oh_rest.oh_rest( config["OPENHAB"]["IP"], config["OPENHAB"]["PORT"], config["OPENHAB"]["USERNAME"], config["OPENHAB"]["PASSWORD"])
 
-pattern_getlines = re.compile( "^(.+?)$", re.MULTILINE)
+pattern_getlines = re.compile( r"(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d{3}.+?)(?=\d{4}-\d\d-\d\d \d\d:\d\d:\d\d\.\d{3})", re.MULTILINE | re.DOTALL)
 
 for k in config:
     if k == "OPENHAB":
